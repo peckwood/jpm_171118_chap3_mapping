@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis3.o3.mappers.StudentMapper">
+	<resultMap type="student" id="studentResultMap">
+		<id property="studId" column="stud_id" />
+		<result property="email" column="email"/>
+		<result property="dob" column="dob"/>
+		<association property="address" column="addr_id" select="selectAddressByStudentId"></association>
+	</resultMap>
+	<resultMap type="address" id="addressResultMap">
+		<id property="addrId" column="addr_id" />
+		<result property="state" column="state"/>
+		<result property="street" column="street"/>
+		<result property="city" column="city"/>
+		<result property="zip" column="zip"/>
+		<result property="country" column="country"/>
+	</resultMap>
+
+	<select id="findAllStudents" resultMap="studentResultMap">
+		select * from students s left join addresses a
+			on s.addr_id = a.addr_id
+	</select>
+	<select id="selectAddressByStudentId" parameterType="int" resultMap="addressResultMap">
+		select * from addresses where addr_id = #{id}
+	</select>
+</mapper>

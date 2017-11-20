@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis3.o4.mappers.TutorMapper">
+<resultMap type="tutor" id="tutorResultMap">
+	<id column="tutor_id" property="tutorId" />
+	<collection property="courses" column="tutor_id" select="selectCoursesByTutorId"></collection>
+</resultMap>
+<resultMap type="course" id="courseResultMap">
+	<id column="course_id" property="courseId"></id>
+</resultMap>
+<select id="selectAllTutors" resultMap="tutorResultMap">
+	select * from tutors
+</select>
+<select id="selectCoursesByTutorId" parameterType="int" resultMap="courseResultMap">
+	select * from courses
+		where tutor_id = #{tutorId}
+</select>
+</mapper>

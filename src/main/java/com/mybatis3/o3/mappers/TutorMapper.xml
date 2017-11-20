@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis3.o3.mappers.TutorMapper">
+<resultMap type="tutor" id="tutorResultMap">
+	<collection property="courses" columnPrefix="c_" resultMap="courseResultMap" ></collection>
+</resultMap>
+<resultMap type="course" id="courseResultMap">
+	<collection property="students" columnPrefix="s_" resultMap="com.mybatis3.o3.mappers.StudentMapper.studentResultMap"></collection>
+</resultMap>
+<select id="selectAllTutors" resultMap="tutorResultMap">
+	select t.*,
+		c.course_id c_couseId, c.name c_name, c.start_date c_startDate, c.end_date c_endDate
+		, s.name c_s_name, s.email c_s_email, s.phone c_s_phone, s.dob c_s_dob, s.bio c_s_bio
+		from tutors t left join courses c on t.tutor_id = c.tutor_id
+		left join course_enrollment ce on c.course_id = ce.course_id
+		inner join students s on ce.stud_id = s.stud_id
+</select>
+</mapper>

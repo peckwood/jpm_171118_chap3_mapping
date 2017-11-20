@@ -19,5 +19,15 @@ Notable files:
 </select>
 ```
 
+### o3: One-to-many mapping using nested ResultMap
+
+this is also an example of `columnPrefix`
+
+### o4: One-to-many mapping with nested select 
 
 
+
+A nested select approach may result in N+1 select problems. First, the
+main query will be executed (1), and for every row returned by the frst
+query, another select query will be executed (N queries for N rows). For
+large datasets, this could result in poor performance. 
